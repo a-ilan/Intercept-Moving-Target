@@ -2,21 +2,25 @@
 <html ng-app="myApp" ng-controller="myCtrl">
 	<head>
 	</head>
-	<body>
+	<body style="font-family: monospace;">
 		<h3>Intercepting a moving target</h3>
-		Source Position: <input ng-model="source"><br/>
-		Target Position: <input ng-model="target"><br/>
-		Target Destination: <input ng-model="targetDestination"><br/>
-		Source Speed: <input ng-model="sourceSpeed" type="number"><br/>
-		Target Speed: <input ng-model="targetSpeed" type="number"><br/>
+		<table>
+			<tr><td>Missile Position:</td>   <td><input ng-model="source"></td></tr>
+			<tr><td>Target Position:</td>    <td><input ng-model="target"></td></tr>
+			<tr><td>Target Destination:</td> <td><input ng-model="targetDestination"></td></tr>
+			<tr><td>Missile Speed:</td>      <td><input ng-model="sourceSpeed" type="number"></td></tr>
+			<tr><td>Target Speed:</td>       <td><input ng-model="targetSpeed" type="number"></td></tr>
+		</table>
 		<button ng-click="calc()">Compute</button><br/>
-		<div ng-if="!result.err"><br/>
-			Time: {{result.time}} <br/>
-			Intersection: {{result.intersection}} <br/>
-			Intersection: {{result.intersection2}} <br/>
+		<div ng-if="!err"><br/>
+			<table>
+				<tr><td>Time:</td>               <td>{{result.time}}</td></tr>
+				<tr><td>Collision Position:</td> <td>{{result.collisionPosition}}</td></tr>
+				<tr><td>Source Destination:</td> <td>{{result.sourceDestination}}</td></tr>
+			</table>
 		</div>
-		<div ng-if="result.err">
-			<font color="red">{{result.err}}</font>
+		<div ng-if="err">
+			<font color="red">{{err}}</font>
 		</div>
 	</body>
 </html>

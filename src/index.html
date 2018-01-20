@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="myCtrl">
+	<head>
+	</head>
+	<body>
+		<h3>Intercepting a moving target</h3>
+		Source Position: <input ng-model="source"><br/>
+		Target Position: <input ng-model="target"><br/>
+		Target Destination: <input ng-model="targetDestination"><br/>
+		Source Speed: <input ng-model="sourceSpeed" type="number"><br/>
+		Target Speed: <input ng-model="targetSpeed" type="number"><br/>
+		<button ng-click="calc()">Compute</button><br/>
+		<div ng-if="!result.err"><br/>
+			Time: {{result.time}} <br/>
+			Intersection: {{result.intersection}} <br/>
+			Intersection: {{result.intersection2}} <br/>
+		</div>
+		<div ng-if="result.err">
+			<font color="red">{{result.err}}</font>
+		</div>
+	</body>
+</html>

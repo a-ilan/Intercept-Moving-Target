@@ -3,10 +3,10 @@ import {module} from 'angular';
 
 var app = module('myApp', []);
 app.controller('myCtrl', [ '$scope', function($scope) {
-	$scope.source = "(300,90,300)";
-	$scope.target = "(100,100,300)";
-	$scope.targetDestination = "(500,100,300)";
-	$scope.sourceSpeed = 1;
+	$scope.source = "(100,10,40)";
+	$scope.target = "(50,50,50)";
+	$scope.targetDestination = "(200,10,50)";
+	$scope.sourceSpeed = 3;
 	$scope.targetSpeed = 5;
 	$scope.result = {time: 0, collisionPosition: '', sourceDestination: ''};
 	$scope.err = null;

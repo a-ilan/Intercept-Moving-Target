@@ -4,6 +4,12 @@
 	</head>
 	<body style="font-family: monospace;">
 		<h3>Intercepting a moving target</h3>
+		<p>
+		A target is moving from point {{target}} to point {{targetDestination}} at a constant speed of {{targetSpeed}}. 
+		A missile needs to intercept the target before it arrives at its destination.
+		The missile has an initial position of {{source}} and moves at a constant speed of {{sourceSpeed}}.
+		This program finds the collision.
+		</p>
 		<table>
 			<tr><td>Missile Position:</td>   <td><input ng-model="source"></td></tr>
 			<tr><td>Target Position:</td>    <td><input ng-model="target"></td></tr>
@@ -14,7 +20,7 @@
 		<button ng-click="calc()">Compute</button><br/>
 		<div ng-if="!err"><br/>
 			<table>
-				<tr><td>Time:</td>               <td>{{result.time}}</td></tr>
+				<tr><td>Collision Time:</td>     <td>{{result.time}}</td></tr>
 				<tr><td>Collision Position:</td> <td>{{result.collisionPosition}}</td></tr>
 				<tr><td>Source Destination:</td> <td>{{result.sourceDestination}}</td></tr>
 			</table>

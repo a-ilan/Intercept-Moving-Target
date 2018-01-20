@@ -60,6 +60,7 @@ function get_collision_time(source, sourceSpeed, target, targetVelocity){
 	var a = targetVelocity.x*targetVelocity.x + targetVelocity.y*targetVelocity.y + targetVelocity.z*targetVelocity.z - sourceSpeed*sourceSpeed;
 	var b = 2*( targetVelocity.x*(target.x - source.x) + targetVelocity.y*(target.y - source.y) + targetVelocity.z*(target.z - source.z) ); 
 	var c = (target.x - source.x)*(target.x - source.x) + (target.y - source.y)*(target.y - source.y) + (target.z - source.z)*(target.z - source.z); 
+	if(a == 0) return -c/b;
 	var result = solve_quadratic_equation(a,b,c);
 	if(result[0] < 0 && result[1] < 0) throw "Invalid collision time.";
 	if(result[0] < 0) return result[1];

@@ -2,31 +2,36 @@
 <html ng-app="myApp" ng-controller="myCtrl">
 	<head>
 	</head>
-	<body style="font-family: monospace;">
+	<body style="font-family: monospace; width:500px;margin-left:20px;">
 		<h3>Intercepting a moving target</h3>
 		<p>
 		A target is moving from point {{target}} to point {{targetDestination}} at a constant speed of {{targetSpeed}}. 
 		A missile needs to intercept the target before it arrives at its destination.
-		The missile has an initial position of {{source}} and moves at a constant speed of {{sourceSpeed}}.
-		This program finds the collision.
+		This missile has an initial position of {{source}} and moves at a constant speed of {{sourceSpeed}}.
+		This program finds the fastest route for the missile to intercept the target.
 		</p>
 		<table>
-			<tr><td>Missile Position:</td>   <td><input ng-model="source"></td></tr>
-			<tr><td>Target Position:</td>    <td><input ng-model="target"></td></tr>
-			<tr><td>Target Destination:</td> <td><input ng-model="targetDestination"></td></tr>
-			<tr><td>Missile Speed:</td>      <td><input ng-model="sourceSpeed" type="number"></td></tr>
-			<tr><td>Target Speed:</td>       <td><input ng-model="targetSpeed" type="number"></td></tr>
+			<tr><td>Missile Position:</td>   <td><input ng-model="source" ng-change="onChangeInput()"></td></tr>
+			<tr><td>Target Position:</td>    <td><input ng-model="target" ng-change="onChangeInput()"></td></tr>
+			<tr><td>Target Destination:</td> <td><input ng-model="targetDestination" ng-change="onChangeInput()"></td></tr>
+			<tr><td>Missile Speed:</td>      <td><input ng-model="sourceSpeed" ng-change="onChangeInput()" type="number"></td></tr>
+			<tr><td>Target Speed:</td>       <td><input ng-model="targetSpeed" ng-change="onChangeInput()" type="number"></td></tr>
 		</table>
-		<button ng-click="calc()">Compute</button><br/>
-		<div ng-if="!err"><br/>
-			<table>
-				<tr><td>Collision Time:</td>     <td>{{result.time}}</td></tr>
-				<tr><td>Collision Position:</td> <td>{{result.collisionPosition}}</td></tr>
-				<tr><td>Source Destination:</td> <td>{{result.sourceDestination}}</td></tr>
-			</table>
-		</div>
+		<h3>Results:</h3>
 		<div ng-if="err">
 			<font color="red">{{err}}</font>
+		</div>
+		<div ng-if="result">
+			<table>
+				<tr><td>Collision Time:</td>      <td>{{result.time}}</td></tr>
+				<tr><td>Collision Position:</td>  <td>{{getString(result.collisionPosition)}}</td></tr>
+				<tr><td>Missile Destination:</td> <td>{{getString(result.sourceDestination)}}</td></tr>
+			</table>
+		</div>
+		<br/>
+		<div ng-style="{display: result? 'inline':'none'}">
+			<canvas id="canvas" style="border: solid 1px black"></canvas><br/>
+			Time: <input type="range" min="0" max="{{result.time}}" step="{{result.time/100}}" ng-model="time" ng-change="onChangeTime()"> {{time}}<br/>
 		</div>
 	</body>
 </html>

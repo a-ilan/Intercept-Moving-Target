@@ -10,6 +10,7 @@ app.controller('myCtrl', [ '$scope', function($scope) {
 	$scope.targetDestination = "(200,10,50)";
 	$scope.sourceSpeed = 8;
 	$scope.targetSpeed = 10;
+	$scope.slider_value = 0;
 	$scope.time = 0;
 	$scope.result = null;
 	$scope.err = null;
@@ -21,8 +22,6 @@ app.controller('myCtrl', [ '$scope', function($scope) {
 	
 	$scope.compute = function(){
 		try {
-			$scope.time = 0;
-			$scope.result = null;
 			var source = Vec.create($scope.source);
 			var target = Vec.create($scope.target);
 			var targetDestination = Vec.create($scope.targetDestination);
@@ -38,6 +37,7 @@ app.controller('myCtrl', [ '$scope', function($scope) {
 	
 	$scope.onChangeInput = function(){
 		$scope.time = 0;
+		$scope.slider_value = 0;
 		$scope.result = null;
 		$scope.err = null;
 		$scope.draw = false;
@@ -68,7 +68,7 @@ function getResult(source, sourceSpeed, target, targetSpeed, targetDestination){
 	if(sourceSpeed < 0 || targetSpeed < 0) throw "Invalid speed";
 	var targetDirection = Vec.getDirection(target,targetDestination);
 	var targetVelocity = Vec.getVelocity(targetDirection,targetSpeed);
-	var collisionTime = get_collision_time(source, sourceSpeed, target, targetVelocity);
+	var collisionTime = get_collision_time(source, target, sourceSpeed, targetSpeed, targetVelocity);
 	var targetArrivalTime = Vec.getTime(target,targetDestination,targetSpeed);
 	if(collisionTime >= targetArrivalTime)
 		throw "Missile cannot reach the target before the target arrives at its destination. Target arrival time: " + targetArrivalTime + ", Collision time: " + collisionTime + ".";
@@ -86,11 +86,12 @@ function getResult(source, sourceSpeed, target, targetSpeed, targetDestination){
 	};
 }
 
-function get_collision_time(source, sourceSpeed, target, targetVelocity){
+function get_collision_time(source, target, sourceSpeed, targetSpeed, targetVelocity){
 	var a = targetVelocity.x*targetVelocity.x + targetVelocity.y*targetVelocity.y + targetVelocity.z*targetVelocity.z - sourceSpeed*sourceSpeed;
 	var b = 2*( targetVelocity.x*(target.x - source.x) + targetVelocity.y*(target.y - source.y) + targetVelocity.z*(target.z - source.z) ); 
 	var c = (target.x - source.x)*(target.x - source.x) + (target.y - source.y)*(target.y - source.y) + (target.z - source.z)*(target.z - source.z); 
-	if(a == 0){
+	if(a === 0 || targetSpeed === sourceSpeed){
+		if(b === 0) throw "Missile is not fast enough to intercept the target.";
 		var time_result = -c/b;
 		if(time_result < 0) throw "Missile is not fast enough to intercept the target. (Negative time)";
 		return time_result;

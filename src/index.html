@@ -31,7 +31,7 @@
 		<br/>
 		<div ng-style="{display: result? 'inline':'none'}">
 			<canvas id="canvas" style="border: solid 1px black"></canvas><br/>
-			Time: <input type="range" min="0" max="{{result.time}}" step="{{result.time/100}}" ng-model="time" ng-change="onChangeTime()"> {{time}}<br/>
+			Time: <input type="range" ng-model="slider_value" min="0" max="100" ng-change="time=result.time*slider_value/100;onChangeTime();"> {{time}}<br/>
 		</div>
 	</body>
 </html>

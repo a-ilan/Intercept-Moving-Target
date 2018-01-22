@@ -70,13 +70,12 @@ function getResult(source, sourceSpeed, target, targetSpeed, targetDestination){
 	var targetVelocity = Vec.getVelocity(targetDirection,targetSpeed);
 	var collisionTime = get_collision_time(source, target, sourceSpeed, targetSpeed, targetVelocity);
 	var targetArrivalTime = Vec.getTime(target,targetDestination,targetSpeed);
-	if(collisionTime >= targetArrivalTime)
+	if(collisionTime > targetArrivalTime)
 		throw "Missile cannot reach the target before the target arrives at its destination. Target arrival time: " + targetArrivalTime + ", Collision time: " + collisionTime + ".";
 	var collisionPosition = Vec.getDestination(target,targetVelocity,collisionTime);
 	var sourceDirection = Vec.getDirection(source,collisionPosition);
 	var sourceVelocity = Vec.getVelocity(sourceDirection,sourceSpeed);
 	var sourceDestination = Vec.getDestination(source,sourceVelocity,collisionTime);
-	
 	Canvas.draw(source,target,source,target,sourceDestination,targetDestination);
 	
 	return {
@@ -91,7 +90,8 @@ function get_collision_time(source, target, sourceSpeed, targetSpeed, targetVelo
 	var b = 2*( targetVelocity.x*(target.x - source.x) + targetVelocity.y*(target.y - source.y) + targetVelocity.z*(target.z - source.z) ); 
 	var c = (target.x - source.x)*(target.x - source.x) + (target.y - source.y)*(target.y - source.y) + (target.z - source.z)*(target.z - source.z); 
 	if(a === 0 || targetSpeed === sourceSpeed){
-		if(b === 0) throw "Missile is not fast enough to intercept the target.";
+		if(target.x == source.x && target.y == source.y && target.z == source.z) return 0;
+		if(b === 0) throw "Time to intercept the target is undefined.";
 		var time_result = -c/b;
 		if(time_result < 0) throw "Missile is not fast enough to intercept the target. (Negative time)";
 		return time_result;

@@ -12,8 +12,8 @@ Vec.getString = function(vec){
 	return '(' + round(vec.x) + ', ' + round(vec.y) + ', ' + round(vec.z) + ')'; 
 }
 
-function round(value,decimals=2){
-	return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+function round(value){
+	return Number(Math.round(value*100)/100);
 }
 
 Vec.length = function(vec){
@@ -30,12 +30,14 @@ Vec.getDestination = function(source,velocity,time){
 Vec.getTime = function(source,destination,speed){
 	var diff = {x: destination.x - source.x, y: destination.y - source.y, z: destination.z - source.z};
 	var length = Vec.length(diff);
+	if(length == 0) return 0;
 	return length/speed;
 }
 
 Vec.getDirection = function(source,destination){
 	var diff = {x: destination.x - source.x, y: destination.y - source.y, z: destination.z - source.z};
 	var length = Vec.length(diff);
+	if(length == 0) return {x:0,y:0,z:0};
 	diff.x /= length; diff.y /= length; diff.z /= length;
 	return diff;
 }

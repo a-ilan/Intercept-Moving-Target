@@ -1,5 +1,3 @@
-Demo: https://tiilan.github.io/Intercept-Moving-Target/dist/
-
 ### To run
 ``` bash
 npm install        # install dependencies
